@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            border: solid black;
+            border-radius: 10px;
+            margin: auto;
+        }
+        .box2{
+          background-color: rgb(245, 178, 168);
+          padding: 30px 0px 1px 0px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+        .box1{
+            width: 500px;
+            text-align: center;
+            margin-top: 100px;
+            box-shadow: 10px 10px;
+        }
+        .box3{
+          padding: 20px 150px 20px 150px;
+          background: linear-gradient(130deg, #CCFFFF, #FFCCCC);
+          border-radius: 10px;
+          border-top-left-radius: 0px;
+          border-top-right-radius: 0px;
+        }
+        .div-form{
+          width: 200px;
+          padding-top: 30px;
+        }
+        label{
+          float: left;
+          margin-left: 5px;
+        }
+        .icon{
+          border-width: 3px;
+          border-radius: 50%;
+          float: center;
+          position:relative;
+          top: 140px;
+          left: 47.5%;
+          width: 80px;
+          padding: 16.5px;
+          background-color: rgb(240, 196, 48);
+        }
+        .btn{
+          background-color: rgb(240, 196, 48);
+          width: 50px;
+          border: solid black;
+          float: center;
+        }
+        body{
+          background: url('https://www.sysfurniture.com/wp-content/uploads/2018/04/Reff-Private-office-1.jpg');
+
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/5b090ecfb2.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+
+
+    <br>
+    <div class="icon">
+      <i class="fa-solid fa-user-tie" style="font-size: 50px;"></i>
+    </div>
+    <div class="box box1">
+      <div class="box2">
+        <h3>Login</h3>
+      </div>
+
+      <div class="box3">
+
+<div class="center-box">
+    <form action="/accounts/profile/?next={{next}}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        {{ form.non_field_errors }}
+        <label>First Name</label>
+          <div class="center-text">
+              {{ form.first_name }}
+<!--              <input type="text"  name="{{ form.first_name.name_of_field }}" value="{{ model.first_name }}" placeholder="First Name" style="float: left">-->
+          </div>
+        <label>Last Name</label>
+          <div class="center-text">
+              {{ form.last_name }}
+<!--               <input type="text"  name="{{ form.last_name.name_of_field }}" value="{{ model.last_name }}" placeholder="Last Name" style="float: left">-->
+
+          </div>
+        <label>Email</label>
+          <div class="center-text">
+              {{ form.email }}
+<!--               <input type="text"  name="{{ form.email.name_of_field }}" value="{{ model.email }}" placeholder="Email" style="float: left">-->
+
+          </div>
+        <label>Phone Number</label>
+          <div class="center-text">
+              {{ form.phone }}
+<!--               <input type="text"  name="{{ form.phone.name_of_field }}" value="{{ model.phone }}" placeholder="Phone Number" style="float: left">-->
+
+          </div>
+         <div>
+            <p><label for="id_picture">Image</label> <input type="file" name="picture" accept="image/*" id="id_picture"></p>
+
+         </div>
+          <!--
+          <div class="drag-area">
+            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <header>Drag & Drop to Upload File</header>
+            <span>OR</span>
+            <button>Browse File</button>
+            <input type="file" hidden>
+          </div>
+
+          <script src="script.js"></script>
+          -->
+          <div class="right-text">
+              <button type="submit">Submit</button>
+          </div>
+
+      </form>
+    </div>
+    </div>
+
+</body>
+</html>
