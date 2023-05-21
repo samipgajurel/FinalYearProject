@@ -1,0 +1,65 @@
+{% load static %}
+{% include "navigationBar.html" %}
+ <div class="container-fluid">
+     <div class="container">
+          <div class="row">
+        <div class="col-sm-12">
+            <h1 class="vagetables_taital">Update Product</h1>
+        </div>
+
+    </div>
+          <div class="row">
+          <div class="col-sm-12">
+                <form action="/listings/add/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <p>
+                        <span>Title</span> <input type="text"  name="title" placeholder="Enter title">
+
+                    </p>
+                    <p>
+                         <span>Description</span>
+                        <textarea name="description" placeholder="Enter description" style="width: 100%; height: 200px;"></textarea>
+                    </p>
+                    <p>
+                         <span>Category</span> <input name="category" placeholder="Enter category"></input>
+                    </p>
+                    <p>
+                        <span>Sub-Category</span> <input name="sub_category" placeholder="Enter sub-category"></input>
+                    </p>
+                    <p>
+                        <span>Price</span> <input name="price" placeholder="Enter price"></input>
+                    </p>
+                    <p>
+                         <span>Unit</span> <input name="unit" placeholder="Enter unit"></input>
+                    </p>
+                    <p>
+                        <span> Do you want this product featured (i.e., highlighted in your profile)?</span>
+                        <input type="radio" id="yes" name="featured" value="1">
+                        <label for="yes">Yes</label>
+                        <input type="radio" id="no" name="featured" value="0" checked>
+                        <label for="no">No</label>
+                    </p>
+                    <p>
+                       <label for="id_picture">Image</label> <input type="file" name="picture" accept="image/*" id="id_picture">
+                    </p>
+                    <p>
+                        <div class="read_bt_1 full">
+                            <button  type="submit">Submit</button>
+                        </div>
+
+                    </p>
+                </form>
+          </div>
+
+     </div>
+     </div>
+
+
+
+ </div>
+
+
+
+
+
+{% include "footer.html" %}

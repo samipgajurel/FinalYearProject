@@ -1,0 +1,119 @@
+{% load static %}
+{% include "navigationBar.html" %}
+
+ <!-- header section end -->
+      <!-- layout_border start -->
+      <div class="container-fluid padding_bottom">
+          <!-- vagetables section start -->
+            <div class="vagetables_section layout_padding">
+               <div class="container">
+                  <div class="vagetables_section_2">
+                     <div class="row">
+                            <div class="col-sm-12">
+                                 <span>
+                                    <span style="display:inline;float:left;"><h1 class="vagetables_taital">Latest Products</h1></span>
+                                    <br>
+                                     <span  style="font-size: 12px;display:inline;float:right;">
+                                        {% if page_obj_L.has_previous %}
+                                            <a href="?pageL=1">&laquo; first</a>
+                                            <a href="?pageL={{ page_obj_L.previous_page_number }}">previous</a>
+                                        {% endif %}
+
+                                        <span>
+                                            Page {{ page_obj_L.number }} of {{ page_obj_L.paginator.num_pages }}.
+                                        </span>
+
+                                        {% if page_obj_L.has_next %}
+                                            <a href="?pageL={{ page_obj_L.next_page_number }}">next</a>
+                                            <a href="?pageL={{ page_obj_L.paginator.num_pages }}">last &raquo;</a>
+                                        {% endif %}
+                                     </span>
+                                 </span>
+
+
+
+<!--                        <p class="vagetables_text">Passages of Lorem Ipsum available, but the majority have suffered alteration </p>-->
+
+                     </div>
+                         {% for listing in page_obj_L %}
+                        <div class="col-md-4">
+                           <div class="hover01 column">
+
+                              <figure>
+                                    <p style="text-align:center">
+                                        {% if listing.picture %}
+                                            <img  style='height:200px' src='{{ listing.picture.url }}'>
+                                        {%else%}
+                                          <img  style='height:200px' src="{% static 'images/noimage.png' %}">
+                                        {% endif %}
+                                  </p>
+                              </figure>
+                           </div>
+                           <h3 class="harshal_text">{{ listing.title }}</h3>
+                               <span>
+                                <span  style="display:inline;" >{{listing.category}}> {{listing.sub_category}} </span>
+                                <span  style="display:inline;float:right;"><i class="bi bi-eye"></i> {{ listing.views }}</span>
+                               </span>
+                           <h3 class="rate_text"> Rs. {{listing.price}}  per {{listing.unit}}</h3>
+                           <div class="read_bt_1"><a href="/listings/view/?id={{ listing.id }}">See More</a></div>
+                        </div>
+                         {% endfor %}
+                     </div>
+
+
+                  </div>
+                  <div class="vagetables_section_2">
+                    <div class="row">
+                         <div class="col-sm-12">
+                         <span>
+                             <span style="display:inline;float:left;"><h1 class="vagetables_taital">Popular Products</h1></span>
+                             <br>
+                             <span style="display:inline;float:right;">
+                                {% if page_obj_P.has_previous %}
+                                    <a href="?pageP=1">&laquo; first</a>
+                                    <a href="?pageP={{ page_obj_P.previous_page_number }}">previous</a>
+                                {% endif %}
+
+                                <span>
+                                    Page {{ page_obj_P.number }} of {{ page_obj_P.paginator.num_pages }}.
+                                </span>
+
+                                {% if page_obj_P.has_next %}
+                                    <a href="?pageP={{ page_obj_P.next_page_number }}">next</a>
+                                    <a href="?pageP={{ page_obj_P.paginator.num_pages }}">last &raquo;</a>
+                                {% endif %}
+                             </span>
+                         </span>
+
+
+<!--                        <p class="vagetables_text">Passages of Lorem Ipsum available, but the majority have suffered alteration </p>-->
+
+                     </div>
+                         {% for listing in page_obj_P %}
+                        <div class="col-md-4">
+                           <div class="hover01 column">
+                              <figure>
+                                  <p style="text-align:center">
+                                     <img  style='height:200px' src='{{ listing.picture.url }}'>
+                                  </p>
+                              </figure>
+                           </div>
+                           <h3 class="harshal_text">{{ listing.title }}</h3>
+                            <span>
+                                <span style="display:inline;" >{{listing.category}}> {{listing.sub_category}} </span>
+                                <span style="display:inline;float:right;"><i class="bi bi-eye"></i> {{ listing.views }}</span>
+                            </span>
+
+                           <h3 class="rate_text"> Rs. {{listing.price}}  per {{listing.unit}}</h3>
+                           <div class="read_bt_1"><a href="/listings/view/?id={{ listing.id }}">See More</a></div>
+                        </div>
+                         {% endfor %}
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+             <!-- vagetables section end -->
+<!--         </div>-->
+      </div>
+{% include "footer.html" %}

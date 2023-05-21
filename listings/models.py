@@ -15,5 +15,6 @@ class Listings(models.Model):
     dateCreated = models.DateTimeField(default=timezone.now)
     lastModified = models.DateTimeField(default=timezone.now)
     views = models.IntegerField(default=0)
+    featured = models.IntegerField(default=0)
     class Meta:
         db_table = "listings"

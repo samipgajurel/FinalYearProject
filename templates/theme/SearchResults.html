@@ -1,0 +1,67 @@
+{% load static %}
+{% include "navigationBar.html" %}
+
+ <!-- header section end -->
+      <!-- layout_border start -->
+      <div class="container-fluid padding_bottom">
+          <div class="vagetables_section layout_padding">
+               <div class="container">
+                  <div class="vagetables_section_2">
+                     <div class="row">
+                            <div class="col-sm-12">
+                                 <span>
+                                    <span style="display:inline;float:left;"><h1 class="vagetables_taital">Search Results </h1></span>
+                                    <br>
+                                     <span  style="font-size: 12px;display:inline;float:right;">
+                                        {% if page_obj_S.has_previous %}
+                                            <a href="?pageS=1&query={{ query }}">&laquo; first</a>
+                                            <a href="?pageS={{ page_obj_S.previous_page_number }}&query={{ query }}">previous</a>
+                                        {% endif %}
+
+                                        <span>
+                                            Page {{ page_obj_S.number }} of {{ page_obj_S.paginator.num_pages }}.
+                                        </span>
+
+                                        {% if page_obj_S.has_next %}
+                                            <a href="?pageS={{ page_obj_S.next_page_number }}&query={{ query }}">next</a>
+                                            <a href="?pageS={{ page_obj_S.paginator.num_pages }}&query={{ query }}">last &raquo;</a>
+                                        {% endif %}
+                                     </span>
+                                 </span>
+
+
+
+<!--                        <p class="vagetables_text">Passages of Lorem Ipsum available, but the majority have suffered alteration </p>-->
+
+                     </div>
+                         {% for listing in page_obj_S %}
+                        <div class="col-md-4">
+                           <div class="hover01 column">
+
+                              <figure>
+                                    <p style="text-align:center">
+                                        {% if listing.picture %}
+                                            <img  style='height:200px' src='{{ listing.picture.url }}'>
+                                        {%else%}
+                                          <img  style='height:200px' src="{% static 'images/noimage.png' %}">
+                                        {% endif %}
+                                  </p>
+                              </figure>
+                           </div>
+                           <h3 class="harshal_text">{{ listing.title }}</h3>
+                               <span>
+                                <span  style="display:inline;" >{{listing.category}}> {{listing.sub_category}} </span>
+                                <span  style="display:inline;float:right;"><i class="bi bi-eye"></i> {{ listing.views }}</span>
+                            </span>
+                           <h3 class="rate_text"> Rs. {{listing.price}}  per {{listing.unit}}</h3>
+                           <div class="read_bt_1"><a href="/listings/view/?id={{ listing.id }}">See More</a></div>
+                        </div>
+                         {% endfor %}
+                     </div>
+
+
+                  </div>
+               </div>
+ </div>
+      </div>
+{% include "footer.html" %}

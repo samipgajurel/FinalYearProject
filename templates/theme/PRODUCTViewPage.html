@@ -1,0 +1,104 @@
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+{% load static %}
+{% include "navigationBar.html" %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3">
+       <div class="hover01 column">
+         <figure>
+           <p style="text-align:center">
+             {% if listing.picture %}
+                <img  style='height:200px' src='{{ listing.picture.url }}'>
+             {%else%}
+                <img  style='height:200px' src="{% static 'images/noimage.png' %}">
+             {% endif %}
+           </p>
+         </figure>
+       </div>
+      <h3 class="harshal_text">{{ listing.title }}</h3>
+      <h3 class="rate_text"> Rs. {{listing.price}}  per {{listing.unit}}</h3>
+      <div>
+        <form action="/cart/add/?id={{listing.id}}" method="post">
+            {% csrf_token %}
+              <div style="width:80%" class="read_bt_1 full" >
+                <input style="text-align:right; width:50px" value="1" name="quantity"></input><span class="spacing_10" style="font-size:20px;">{{ listing.unit }}</span>
+                <button type="submit">Add to Cart</button>
+              </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-3">
+        <h1 class="vagetables_taital">Product Detail</h1>
+           {% if request.user and request.user == listing.creator %}
+                <div class="read_bt_1">
+                  <a href="/listings/update/?id={{ listing.id }}" class="box"> Update</a>
+                  <a class="spacing_20" href="/listings/delete/?id={{ listing.id }}" class="box"  onclick="return confirm('Are you sure you want to delete this products?');"> Delete </a>
+                </div>
+          {% endif %}
+          <p>Category: {{listing.category}}</p>
+          <p>Sub-Category: {{listing.sub_category}}</p>
+          <p>Description: {{ listing.description }}</p>
+          <p>Views: {{ listing.views }}</p>
+          {% if listing.creator.profile.role == "farmer" %}
+            <p>Seller: {{listing.creator.profile.name}} (Farmer)</p>
+          {% else %}
+            <p>Seller: {{listing.creator.profile.name}} (Dealer)</p>
+          {% endif %}
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+                 <div class="col-sm-8">
+                     <h1 class="vagetables_taital">Similar Products </h1>
+
+                 </div>
+                 <div class="col-sm-4">
+                     <br>
+                      <span  style="font-size: 12px;">
+                                        {% if page_obj_S.has_previous %}
+                                            <a href="?pageS=1&id={{ listing.id }}">&laquo; first</a>
+                                            <a href="?pageS={{ page_obj_S.previous_page_number }}&id={{ listing.id }}">previous</a>
+                                        {% endif %}
+
+                                        <span>
+                                            Page {{ page_obj_S.number }} of {{ page_obj_S.paginator.num_pages }}.
+                                        </span>
+
+                                        {% if page_obj_S.has_next %}
+                                            <a href="?pageS={{ page_obj_S.next_page_number }}&id={{ listing.id }}">next</a>
+                                            <a href="?pageS={{ page_obj_S.paginator.num_pages }}&id={{ listing.id }}">last &raquo;</a>
+                                        {% endif %}
+                                     </span>
+                                 </span>
+                 </div>
+             </div>
+        <div class="row">
+<!--                 to do add loop for featured product-->
+                 {% for listing in page_obj_S %}
+                        <div class="col-md-4">
+                           <div class="hover01 column">
+
+                              <figure>
+                                    <p style="text-align:center">
+                                        {% if listing.picture %}
+                                            <img  style='height:200px' src='{{ listing.picture.url }}'>
+                                        {%else%}
+                                          <img  style='height:200px' src="{% static 'images/noimage.png' %}">
+                                        {% endif %}
+                                  </p>
+                              </figure>
+                           </div>
+                           <h3 class="harshal_text">{{ listing.title }}</h3>
+                               <span>
+                                <span  style="display:inline;" >{{listing.category}}> {{listing.sub_category}} </span>
+                                <span  style="display:inline;float:right;"><i class="bi bi-eye"></i> {{ listing.views }}</span>
+                            </span>
+                           <h3 class="rate_text"> Rs. {{listing.price}}  per {{listing.unit}}</h3>
+                           <div class="read_bt_1"><a href="/listings/view/?id={{ listing.id }}">See More</a></div>
+                        </div>
+                         {% endfor %}
+             </div>
+
+    </div>
+  </div>
+</div>
+{% include "footer.html" %}

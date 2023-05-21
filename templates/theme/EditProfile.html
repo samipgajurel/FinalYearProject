@@ -1,0 +1,42 @@
+{% load static %}
+{% include "navigationBar.html" %}
+ <div class="container-fluid">
+     <div class="container">
+          <div class="row">
+             <div class="col-sm-12">
+                <h1 class="vagetables_taital"> Edit Profile</h1>
+             </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-12">
+               <form action="/accounts/profile/?next={{next}}" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
+                     {{ form.non_field_errors }}
+                  <p>
+                      <label>First Name</label>
+                      {{ form.first_name }}
+                  </p>
+                  <p>
+                       <label>Last Name</label>
+                       {{ form.last_name }}
+                  </p>
+                 <p>
+                     <label>Email</label>
+                     {{ form.email }}
+                 </p>
+                  <p>
+                      <label>Phone Number</label>
+                      {{ form.phone }}
+                  </p>
+                  <p><label for="id_picture">Image</label> <input type="file" name="picture" accept="image/*" id="id_picture"></p>
+                  <p>
+                        <div class="read_bt_1 full">
+                            <button  type="submit">Submit</button>
+                        </div>
+                  </p>
+                </form>
+          </div>
+          </div>
+     </div>
+ </div>
+{% include "footer.html" %}

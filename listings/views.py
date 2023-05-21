@@ -5,6 +5,7 @@ from .models import Listings
 from listings.forms import ListingsImageForm
 from django.core.paginator import Paginator
 from listings.service import get_latest_products,get_popular_products
+from listings.service import get_search_results
 
 # Create your views here.
 def index_page (request):
@@ -40,31 +41,42 @@ def add_product (request):
         image = request.FILES.get('picture')
         price = request.POST.get("price")
         unit = request.POST.get("unit")
+        featured = request.POST.get("featured")
 
         print(image)
         listing=Listings(title=title,description=description,creator=currentUser,
                   dateCreated=now,lastModified=now,picture=image,price=price,unit=unit,
-                         category=category, sub_category=sub_category)
+                         category=category, sub_category=sub_category, featured=featured)
         listing.save()
         return render(request,'PRODUCTViewPage.html',{'listing':listing})
 
+def fq(text):
+    return text.replace(" ","+")
 def see_products(request):
     id = request.GET.get('id')
     listing = Listings.objects.get(id=id)
     listing.views = listing.views + 1
     listing.save()
-    return render(request, 'DealPage.html', {'listing': listing})
+    query = f"{fq(listing.title)}+{fq(listing.category)}+{fq(listing.sub_category)}"
+    if not request.GET._mutable:
+        request.GET._mutable = True
+    request.GET["query"] = query
+    request.GET["exclude"] = id
+    data = get_search_results(request)
+    data['listing'] = listing
+    return render(request, 'PRODUCTViewPage.html',data)
 
 def update_products(request):
     currentUser = request.user
     role = currentUser.profile.role
-    if role == Profile.CONSUMER:
-        return render(request, 'AccessDenied.html')
     id = request.GET.get('id')
     print(id)
     listing = Listings.objects.get(id=id)
+    if role == Profile.CONSUMER or listing.creator != currentUser:
+        return render(request, 'AccessDenied.html')
+
     if request.method == "GET":
-        return render(request, 'UpdatePRODUCTPage.html', {'listing': listing})
+        return render(request, 'UPDATEPage.html', {'listing': listing})
     else:
         listing.title = request.POST.get('title')
         listing.description = request.POST.get("description")
@@ -72,21 +84,24 @@ def update_products(request):
         listing.sub_category = request.POST.get("sub_category")
         listing.lastModified = datetime.datetime.now()
         image = request.FILES.get('picture')
-        unit = request.POST.get('unit')
+        listing.unit = request.POST.get('unit')
         listing.price = request.POST.get('price')
-
+        listing.featured = request.POST.get('featured')
+        print("#####")
+        print(image)
         if image:
             listing.picture = image
         listing.save()
-        return render(request, 'DealPage.html', {'listing': listing})
+        return render(request, 'PRODUCTViewPage.html', {'listing': listing})
 
 def delete_products(request):
     currentUser = request.user
     role = currentUser.profile.role
-    if role == Profile.CONSUMER:
-        return render(request, 'AccessDenied.html')
     id = request.GET.get('id')
-    listing= Listings.objects.get(id=id)
+    listing = Listings.objects.get(id=id)
+    if role == Profile.CONSUMER or listing.creator != currentUser:
+        return render(request, 'AccessDenied.html')
+
     listing.delete()
-    return redirect("/home")
+    return redirect("/home/")
 

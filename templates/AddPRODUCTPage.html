@@ -35,7 +35,7 @@
         .center-text{
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: right;
             margin: 10px 10px 10px 10px;
         }
         .right-text{
@@ -48,6 +48,10 @@
         body{
           background: url('https://getwallpapers.com/wallpaper/full/3/8/b/503572.jpg');
           background-size:cover;
+        }
+        span{
+            margin-right: 5px;
+
         }
 
         /*
@@ -109,6 +113,7 @@
 
 </head>
 <body>
+ {% include "navigationBar.html" %}
 
 
     <div class="all-container">
@@ -120,23 +125,31 @@
             {% csrf_token %}
 
           <div class="center-text">
-              <input type="text"  name="title" placeholder="Enter title" style="float: left">
+             <span>Title</span> <input type="text"  name="title" placeholder="Enter title" style="float: left">
           </div>
             <div class="center-text">
-              <textarea name="description" placeholder="Enter description" style="width: 100%; height: 200px;"></textarea>
+              <span>Description</span>
+                <textarea name="description" placeholder="Enter description" style="width: 100%; height: 200px;"></textarea>
           </div>
             <div class="center-text">
-              <input name="category" placeholder="Enter category" style="float: left"></input>
+             <span>Category</span> <input name="category" placeholder="Enter category" style="float: left"></input>
           </div>
             <div class="center-text">
-              <input name="sub_category" placeholder="Enter sub-category" style="float: left"></input>
+              <span>Sub-Category</span><input name="sub_category" placeholder="Enter sub-category" style="float: left"></input>
           </div>
             <div class="center-text">
-              <input name="price" placeholder="Enter price" style="float: left"></input>
+              <span>Price</span><input name="price" placeholder="Enter price" style="float: left"></input>
           </div>
             <div class="center-text">
-              <input name="unit" placeholder="Enter unit" style="float: left"></input>
+              <span>Unit</span><input name="unit" placeholder="Enter unit" style="float: left"></input>
           </div>
+            <div class = "center-text">
+                <span> Do you want this product featured (i.e., highlighted in your profile)?</span>
+                <input type="radio" id="yes" name="featured" value="1">
+                <label for="yes">Yes</label><br>
+                <input type="radio" id="no" name="featured" value="0" checked>
+                <label for="no">No</label><br>
+            </div>
           <div class="center-text">
               <p><label for="id_picture">Image</label> <input type="file" name="picture" accept="image/*" id="id_picture"></p>
           </div>

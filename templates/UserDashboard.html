@@ -16,8 +16,9 @@
         }
         .photo1{
           margin: auto;
-          width: 300px;
-          height: 400px;
+          width: 20px;
+          height: 20px;
+          margin-left: 200px; margin-top: 50px;
           background-repeat: no-repeat;
           background-size: 1000px 1000px;
           background-position: center;
@@ -26,8 +27,9 @@
         }
         .photo2{
           margin: auto;
-          width: 300px;
-          height: 400px;
+          width: 20px;
+          height: 20px;
+           margin-left: 200px; margin-top: 50px;
           background-repeat: no-repeat;
           background-size: 1000px 1000px;
           background-position: center;
@@ -67,7 +69,7 @@
           background: linear-gradient(130deg, #CCFFFF, #FFCCCC);
         }
         body{
-          background: url('http://itsystem.az/wp-content/uploads/2017/12/7.jpg');
+          background : ;
         }
     </style>
 
@@ -75,18 +77,21 @@
 </head>
 
 <body>
-
+ {% include "navigationBar.html" %}
     <div class="topic">
       <h2>User Dashboard</h2>
     </div>
     {% if not account.picture %}
-            <div class="photo1"></div>
+ <div class="left-text">
+             <img align="left"  src="/images/user.png" alt="" width="200" height="200" style="margin-left: 200px; margin-top: 50px;" >
+    </div>
             {% else %}
 <!--            <div class="photo2" style="background-image: url('{{ account.picture.url }}');"></div>-->
     <div class="left-text">
              <img align="left"  src="{{ account.picture.url }}" alt="" width="200" height="200" style="margin-left: 200px; margin-top: 50px;" >
     </div>
     {% endif %}
+
     <div class="upper-div">
       <h3 style="padding: 0px;">User Details</h3>
       <p>Name:{{ account.first_name }} {{ account.last_name }}</p>
@@ -95,6 +100,12 @@
         <p>You are logged in as <strong>{{account.role}}</strong> </p>
         <a href="/accounts/profile/"> Edit </a>
     </div>
+ <div>
+{% if account.role == "farmer" or account.role == "dealer" %}
+     <a href="/listings/add/">Add Product</a>
+     {% endif %}
+
+ </div>
 
 <!--    <div class="box">-->
 <!--        <div class="boxes">-->

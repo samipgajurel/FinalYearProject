@@ -3,7 +3,9 @@ from django.contrib.auth import login, authenticate
 from .forms import SignUpForm,ProfileForm
 from django.shortcuts import render, redirect
 from .models import Profile
-
+from django.core.paginator import Paginator
+from listings.service import get_latest_products_by_user,get_featured_products_by_user
+from django.contrib.auth.models import User
 
 # Create your views here.
 def dashboard_page (request):
@@ -13,7 +15,17 @@ def dashboard_page (request):
     currentUser= request.user
     account= Profile.objects.get(user=currentUser)
     print(account.first_name)
-    return render(request, 'UserDashboard.html', {"account": account})
+    latest_products_by_user = get_latest_products_by_user(currentUser)
+    paginatorL = Paginator(latest_products_by_user, 6)
+    page_number_L = request.GET.get('pageL', 1)
+    page_obj_L = paginatorL.get_page(page_number_L)
+    featured_product_by_user = get_featured_products_by_user(currentUser)
+    paginatorF = Paginator(featured_product_by_user, 3)
+    page_number_F = request.GET.get('pageF', 1)
+    page_obj_F = paginatorF.get_page(page_number_F)
+    return render(request, 'UserDashboard.html', {"account": account,
+                                                  'page_obj_L': page_obj_L,
+                                                  'page_obj_F': page_obj_F})
 def profile_page(request):
     next = "/accounts/dashboard/"
     user = request.user
