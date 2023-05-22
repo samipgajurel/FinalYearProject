@@ -1,7 +1,23 @@
 {% load static %}
 {% include "navigationBar.html" %}
+
 <div class="container-fluid">
     <div class="container">
+        <div class="row">
+                <div class="col-sm-12">
+                     {% if messages %}
+                        <ul class="messages">
+                        {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                {{ message }}
+                            </li>
+
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
         <div class="row">
             <div class="col-sm-12">
                  <h1 class="vagetables_taital">Shopping Cart</h1>
@@ -48,7 +64,7 @@
 
                     {% if cart_items %}
                         <div class="read_bt_1">
-                            <a href="#"> Checkout </a>
+                            <a href="/payment/create-checkout-session/" id="submitBtn"> Checkout </a>
                         </div>
 
                     <p style="text-align:center;">OR</p>
@@ -60,4 +76,28 @@
         </div>
     </div>
 </div>
+<!--{% verbatim %}-->
+<!--<script src="https://js.stripe.com/v3/"></script>-->
+<!--<script type="application/javascript">-->
+<!--document.getElementById('submitBtn').addEventListener('click', function() {-->
+<!--        fetch('/payment/create-checkout-session/?amount=2000') // Pass the amount as a query parameter-->
+<!--            .then(function(response) {-->
+<!--                return response.json();-->
+<!--            })-->
+<!--            .then(function(data) {-->
+<!--            console.log(data)-->
+<!--                var stripe = Stripe('pk_test_51NADBLSJ5QeXXxoi0fdtIPN5S79QO704mT17kak5UpCMsv2hIhy3f2pLfS16fyApeqb7zpJ50I1PffZA3n8tpTYx00Ov6TrTde');-->
+<!--                stripe.redirectToCheckout({-->
+<!--                    sessionId: data.sessionId-->
+<!--                }).then(function(result) {-->
+<!--                    // Handle any errors during redirection-->
+<!--                    console.error(result.error.message);-->
+<!--                });-->
+<!--            })-->
+<!--            .catch(function(error) {-->
+<!--                console.error(error);-->
+<!--            });-->
+<!--    });-->
+<!--</script>-->
+<!--{% endverbatim %}-->
 {% include "footer.html" %}

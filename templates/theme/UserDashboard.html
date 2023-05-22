@@ -30,12 +30,72 @@
          <div class="col-sm-7">
              <div class="row">
                  <div class="col-sm-6">
-                     <h1 class="vagetables_taital">Featured Products </h1>
+                     <h1 class="vagetables_taital">Ordered Products </h1>
 
                  </div>
                  <div class="col-sm-3">
                      <br>
                       <span  style="font-size: 12px;">
+                                        {% if page_obj_O.has_previous %}
+                                            <a href="?pageO=1">&laquo; first</a>
+                                            <a href="?pageO={{ page_obj_O.previous_page_number }}">previous</a>
+                                        {% endif %}
+
+                                        <span>
+                                            Page {{ page_obj_O.number }} of {{ page_obj_O.paginator.num_pages }}.
+                                        </span>
+
+                                        {% if page_obj_O.has_next %}
+                                            <a href="?pageO={{ page_obj_O.next_page_number }}">next</a>
+                                            <a href="?pageO={{ page_obj_O.paginator.num_pages }}">last &raquo;</a>
+                                        {% endif %}
+                                     </span>
+                                 </span>
+                 </div>
+                 <div class="col-sm-3">
+                     {% if account.role == "farmer" or account.role == "dealer" %}
+                        <div class="read_bt_1 full"><a href="/listings/add/">Add Product</a></div>
+                     {% endif %}
+                 </div>
+             </div>
+             <div class="row">
+<!--                 to do add loop for featured product-->
+                 {% for order in page_obj_O %}
+                        <div class="col-md-4">
+                           <div class="hover01 column">
+
+                              <figure>
+                                    <p style="text-align:center">
+                                        {% if order.product.picture %}
+                                            <img  style='height:200px' src='{{ order.product.picture.url }}'>
+                                        {%else%}
+                                          <img  style='height:200px' src="{% static 'images/noimage.png' %}">
+                                        {% endif %}
+                                  </p>
+                              </figure>
+                           </div>
+                           <h3 class="harshal_text">{{ order.product.title }}</h3>
+                               <span>
+                                <span  style="display:inline;" >{{order.order.date_ordered}} </span>
+                                <span  style="display:inline;float:right;"><i class="bi bi-eye"></i> {{ order.quantity }} {{ order.product.unit }}</span>
+                            </span>
+                           <h3 class="rate_text"> Rs. {{order.product.price}}  per {{order.product.unit}}</h3>
+                           <div class="read_bt_1"><a href="#">{{ order.order.order_status }}</a></div>
+                        </div>
+                         {% endfor %}
+             </div>
+         </div>
+     </div>
+             <div class="vagetables_section layout_padding">
+               <div class="container">
+                  <div class="vagetables_section_2">
+                        {% if account.role == "farmer" or account.role == "dealer" %}
+                            <div class="row">
+                            <div class="col-sm-12">
+                                 <span>
+                                    <span style="display:inline;float:left;"><h1 class="vagetables_taital">Featured Products </h1></span>
+                                    <br>
+                                     <span  style="font-size: 12px;display:inline;float:right;">
                                         {% if page_obj_F.has_previous %}
                                             <a href="?pageF=1">&laquo; first</a>
                                             <a href="?pageF={{ page_obj_F.previous_page_number }}">previous</a>
@@ -51,16 +111,13 @@
                                         {% endif %}
                                      </span>
                                  </span>
-                 </div>
-                 <div class="col-sm-3">
-                     {% if account.role == "farmer" or account.role == "dealer" %}
-                        <div class="read_bt_1 full"><a href="/listings/add/">Add Product</a></div>
-                     {% endif %}
-                 </div>
-             </div>
-             <div class="row">
-<!--                 to do add loop for featured product-->
-                 {% for listing in page_obj_F %}
+
+
+
+<!--                        <p class="vagetables_text">Passages of Lorem Ipsum available, but the majority have suffered alteration </p>-->
+
+                     </div>
+                         {% for listing in page_obj_L %}
                         <div class="col-md-4">
                            <div class="hover01 column">
 
@@ -83,13 +140,8 @@
                            <div class="read_bt_1"><a href="/listings/view/?id={{ listing.id }}">See More</a></div>
                         </div>
                          {% endfor %}
-             </div>
-         </div>
-     </div>
-             <div class="vagetables_section layout_padding">
-               <div class="container">
-                  <div class="vagetables_section_2">
-                     <div class="row">
+                     </div>
+                            <div class="row">
                             <div class="col-sm-12">
                                  <span>
                                     <span style="display:inline;float:left;"><h1 class="vagetables_taital">Latest Products </h1></span>
@@ -140,6 +192,8 @@
                         </div>
                          {% endfor %}
                      </div>
+                      {% endif %}
+
 
 
                   </div>

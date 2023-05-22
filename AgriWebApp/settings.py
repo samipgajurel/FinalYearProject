@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'listings',
     'cart',
     'search',
+    'payment',
     'phonenumber_field',  # pip install django-phonenumber_field
 ]
 LOGOUT_REDIRECT_URL = '/home/'
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'AgriWebApp.urls'
 
@@ -142,3 +144,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51NADBLSJ5QeXXxoi0fdtIPN5S79QO704mT17kak5UpCMsv2hIhy3f2pLfS16fyApeqb7zpJ50I1PffZA3n8tpTYx00Ov6TrTde'
+STRIPE_SECRET_KEY = 'sk_test_51NADBLSJ5QeXXxoiv6FFaySqs7hDRntADF3dTPWDDIxoCNIVxIMbvU7rOen6EvsU2KAQQRpHDXaVk6Y8ZH4YJZ4S00oG3RRDiG'

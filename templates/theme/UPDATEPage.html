@@ -10,27 +10,27 @@
     </div>
           <div class="row">
           <div class="col-sm-12">
-                <form action="/listings/add/" method="post" enctype="multipart/form-data">
+                 <form action="/listings/update/?id= {{listing.id}}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                     <p>
-                        <span>Title</span> <input type="text"  name="title" placeholder="Enter title">
+                        <span>Title</span> <input type="text"  name="title" placeholder="Enter title" value="{{ listing.title }}">
 
                     </p>
                     <p>
                          <span>Description</span>
-                        <textarea name="description" placeholder="Enter description" style="width: 100%; height: 200px;"></textarea>
+                        <textarea name="description" placeholder="Enter description" style="width: 100%; height: 200px;">{{ listing.description }}</textarea>
                     </p>
                     <p>
-                         <span>Category</span> <input name="category" placeholder="Enter category"></input>
+                         <span>Category</span> <input name="category" placeholder="Enter category" value="{{ listing.category }}"></input>
                     </p>
                     <p>
-                        <span>Sub-Category</span> <input name="sub_category" placeholder="Enter sub-category"></input>
+                        <span>Sub-Category</span> <input name="sub_category" placeholder="Enter sub-category" value="{{ listing.sub_category }}"></input>
                     </p>
                     <p>
-                        <span>Price</span> <input name="price" placeholder="Enter price"></input>
+                        <span>Price</span> <input name="price" placeholder="Enter price" value="{{ listing.price }}"></input>
                     </p>
                     <p>
-                         <span>Unit</span> <input name="unit" placeholder="Enter unit"></input>
+                         <span>Unit</span> <input name="unit" placeholder="Enter unit" value="{{ listing.unit }}"></input>
                     </p>
                     <p>
                         <span> Do you want this product featured (i.e., highlighted in your profile)?</span>

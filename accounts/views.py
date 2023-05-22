@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from .models import Profile
 from django.core.paginator import Paginator
 from listings.service import get_latest_products_by_user,get_featured_products_by_user
+from payment.service import get_order_for_seller,get_order_for_consumer
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -23,9 +24,18 @@ def dashboard_page (request):
     paginatorF = Paginator(featured_product_by_user, 3)
     page_number_F = request.GET.get('pageF', 1)
     page_obj_F = paginatorF.get_page(page_number_F)
+
+    if account.role != Profile.CONSUMER:
+        orders= get_order_for_seller(currentUser)
+    else:
+        orders = get_order_for_consumer(currentUser)
+    paginatorO = Paginator(orders, 6)
+    page_number_O = request.GET.get('pageO', 1)
+    page_obj_O = paginatorO.get_page(page_number_O)
     return render(request, 'UserDashboard.html', {"account": account,
                                                   'page_obj_L': page_obj_L,
-                                                  'page_obj_F': page_obj_F})
+                                                  'page_obj_F': page_obj_F,
+                                                  'page_obj_O': page_obj_O})
 def profile_page(request):
     next = "/accounts/dashboard/"
     user = request.user

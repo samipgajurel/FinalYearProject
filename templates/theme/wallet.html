@@ -1,0 +1,28 @@
+{% load static %}
+{% include "navigationBar.html" %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="vagetables_taital">Wallet</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <p>
+                    {% if wallet_balance %}
+                    <h3>Current Wallet Balance: Rs. {{ wallet_balance }}</h3>
+                    {% else %}
+                    <p>Insufficient Funds.</p>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <div class="read_bt_1">
+                    <a href="#">Add Money</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
